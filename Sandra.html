@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sandra ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(120deg,#ff9a9e,#fecfef);
+    color:white;
+    text-align:center;
+    overflow:hidden;
+}
+
+.screen{display:none;height:100vh;padding:40px 20px;}
+.active{display:block;}
+
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    margin-top:20px;
+    font-size:1rem;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.next,.yes{background:white;color:#ff4e73;}
+.no{background:#ff4e73;color:white;position:absolute;}
+
+.gallery img{
+    width:150px;height:150px;
+    border-radius:20px;
+    object-fit:cover;margin:10px;
+}
+
+.ring{
+    font-size:70px;
+    animation:spin 2s linear infinite;
+    cursor:pointer;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+.petal{
+    position:fixed;top:-10px;
+    font-size:18px;
+    animation:fall 6s linear infinite;
+}
+@keyframes fall{to{transform:translateY(110vh);opacity:0}}
+
+.heartPopup{
+    position:fixed;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%) scale(0);
+    font-size:60px;
+    animation:pop 1s forwards;
+}
+@keyframes pop{
+    0%{transform:translate(-50%,-50%) scale(0)}
+    60%{transform:translate(-50%,-50%) scale(1.3)}
+    100%{transform:translate(-50%,-50%) scale(1)}
+}
+
+/* WINK ANIMATION */
+.wink{
+    display:inline-block;
+    animation:winkAnim 2s infinite;
+}
+@keyframes winkAnim{
+    0%,85%,100%{transform:scale(1);}
+    90%{transform:rotate(15deg);}
+    92%{transform:rotate(-15deg);}
+    94%{transform:rotate(0);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1 -->
+<div class="screen active" id="s1">
+    <h1>Hey Sandra ❤️</h1>
+    <p>I made something special for you...</p>
+    <button class="next" onclick="next(2)">Tap to Continue 💌</button><br>
+    <img src="rose.gif" style="width:260px;margin-top:25px;">
+</div>
+
+<!-- SCREEN 2 -->
+<div class="screen" id="s2">
+    <p>I’m really sorry if I made you feel unimportant by not calling much... You matter so much to me ❤️🥹</p>
+    <button class="next" onclick="next(3)">Next ➡️</button><br>
+    <img src="catlove.gif" style="width:220px;margin-top:25px;">
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen" id="s3">
+    <h2>Even 196 kilometers can't stop us ❤️</h2>
+    <p>Different cities, same sky 🌙</p>
+    <p>You’re worth every kilometer between us.</p>
+    <button class="next" onclick="next(4)">There’s something I want to ask… 💌</button><br>
+    <img src="catsleep.gif" style="width:200px;margin-top:25px;">
+</div>
+
+<!-- SCREEN 4 QUESTION -->
+<div class="screen" id="s4">
+    <h2>Will you be my Valentine? 💖</h2>
+    <button id="yesBtn" class="yes" onclick="yesClicked()">Yes 💘</button>
+    <button id="noBtn" class="no" onclick="noClicked()">No 🙈</button>
+</div>
+
+<!-- SCREEN 7 -->
+<div class="screen" id="s7">
+    <h1>I knew it 😌 <span class="wink">🌝</span></h1>
+    <p>You can’t hide that cute heart 💖</p>
+    <button class="next" onclick="next(5)">Continue 💍</button>
+</div>
+
+<!-- SCREEN 5 RING -->
+<div class="screen" id="s5">
+    <h2>You said YES 🥹💖</h2>
+    <div class="ring" onclick="ringPop()">💍</div>
+    <p>This promise ring is for you</p>
+    <button class="next" onclick="next(6)">Open your surprise 🎁</button>
+</div>
+
+<!-- SCREEN 6 PHOTOS -->
+<div class="screen" id="s6">
+    <h2>For the most beautiful girl 🌸</h2>
+    <div class="gallery">
+        <img src="photo1.jpg">
+        <img src="photo2.jpg">
+        <img src="photo3.jpg">
+    </div>
+</div>
+
+<script>
+let noCount=0;
+const noTexts=["Please 🥺","I really want you 💖","Don’t break my heart 😭","Pretty please 🌸","You’re too cute to say no 🥹"];
+
+function next(n){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById('s'+n).classList.add('active');
+
+ if(n===6){
+   startPetals();
+   setTimeout(showHeartPopup,2500);
+ }
+}
+
+function yesClicked(){ next(7); }
+
+function noClicked(){
+ const yesBtn=document.getElementById("yesBtn");
+ const noBtn=document.getElementById("noBtn");
+ noCount++;
+ yesBtn.style.transform="scale("+(1+noCount*0.2)+")";
+ noBtn.innerText=noTexts[noCount%noTexts.length];
+ noBtn.style.top=Math.random()*window.innerHeight+"px";
+ noBtn.style.left=Math.random()*window.innerWidth+"px";
+}
+
+function startPetals(){
+ setInterval(()=>{
+   const p=document.createElement("div");
+   p.className="petal";
+   p.innerHTML="🌸";
+   p.style.left=Math.random()*100+"vw";
+   document.body.appendChild(p);
+   setTimeout(()=>p.remove(),6000);
+ },300);
+}
+
+function showHeartPopup(){
+ const h=document.createElement("div");
+ h.className="heartPopup";
+ h.innerHTML="❤️ I LOVE YOU ❤️";
+ document.body.appendChild(h);
+}
+
+function ringPop(){
+ alert("Promise sealed forever 💖");
+}
+</script>
+
+</body>
+</html>
